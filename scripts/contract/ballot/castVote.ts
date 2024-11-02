@@ -8,7 +8,7 @@ import walletClient from "./walletCLient"
 async function fn() {
   const publicClient = await pbClient()
   const { abi} = await getContractDetails(ballotJSON())
-  const {contractAddress, proposalIndex} = await getParameters(process.argv.slice(2))
+  const {contractAddress, proposalIndex} = await getParameters(process.argv.slice(-2))
   console.log("Proposal selected: ");
   const proposal = (await publicClient.readContract({
     address: contractAddress,
@@ -17,7 +17,7 @@ async function fn() {
     args: [BigInt(proposalIndex)],
   })) as any[];
   const name = hexToString(proposal[0], { size: 32 });
-  console.log("Voting to proposal", name);
+  console.log("Casting vote on proposal: ", name);
   const ok = await yesno({defaultValue: false ,question:"Confirm? (Y/n)"});
   
   if (ok) {

@@ -13,7 +13,6 @@ async function fn({
   const contractJSON = ballotJSON()
   const args = [proposals().map(p=>toHex(p, {size:32}))]
   console.log(`\nDeploying ${name} contract`);
-  console.log(args)
   const {abi, bytecode} = await getContractDetails(contractJSON)
   const hash = await deployer.deployContract({
     abi,
@@ -22,6 +21,7 @@ async function fn({
   });
   const receipt = await publicClient.waitForTransactionReceipt({ hash });
   return {
+    abi,
     hash, receipt
   }
 }

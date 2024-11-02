@@ -3,7 +3,7 @@ import { proposals } from "./conf";
 import publicClient from "./publicClient";
 
 async function fn({ receipt, abi }:{receipt:any, abi:any}) {
-  console.log("Proposals: ");
+  console.log("Proposals: for contract at ",  receipt.contractAddress);
   for (let index = 0; index < proposals().length; index++) {
     const proposal = (await (await publicClient()).readContract({
       address: receipt.contractAddress,
